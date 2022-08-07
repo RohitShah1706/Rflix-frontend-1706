@@ -1,0 +1,55 @@
+:root {
+    --main-color: #0b0b0b;
+    // overflow: hidden;
+}
+
+.main-container {
+
+    background: var(--main-color);
+    color: white;
+}
+
+.form {
+    position: relative;
+}
+
+
+.left-pan {
+    padding-left: 7px;
+}
+
+.form-input {
+
+    height: 55px;
+    text-indent: 33px;
+    border-radius: 10px;
+}
+
+.form-input:focus {
+
+    box-shadow: none;
+    border: none;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    .card-body {
+        margin: 10px 0px;
+        // padding-left: 28px;
+        justify-content: center;
+    }
+}
+
+.movies-container {
+    background: var(--main-color);
+    // color: white;
+}
+
+.card-body {
+    background: var(--main-color);
+    color: white;
+}

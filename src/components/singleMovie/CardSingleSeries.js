@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Navigation from "../navbar/Navbar";
 import { getMovie } from "./getMovie";
 import { Button } from 'react-bootstrap';
 import './SingleMovie.scss';
@@ -61,7 +60,6 @@ const CardSingleSeries = () => {
     }
     return (
         <>
-            <Navigation />
             <div className="item-page">
                 <img
                     src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
