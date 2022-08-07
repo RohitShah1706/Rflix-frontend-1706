@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-import Navigation from "../navbar/Navbar";
-=======
->>>>>>> dfdbf44ac957c5df6da93cd98bf74725529e9c0a
 import { Container } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -25,14 +21,10 @@ const SeriesPage = () => {
     }, []);
     return (
         <div className="movies-container">
-<<<<<<< HEAD
-    <Navigation />
-=======
->>>>>>> dfdbf44ac957c5df6da93cd98bf74725529e9c0a
-    {/* create responsive row of cards */ }
-    <Container fluid className="row">
-        <DisplayCards list={genreSeries} />
-    </Container>
+            {/* create responsive row of cards */}
+            <Container fluid className="row">
+                <DisplayCards list={genreSeries} />
+            </Container>
         </div >
     )
 }
