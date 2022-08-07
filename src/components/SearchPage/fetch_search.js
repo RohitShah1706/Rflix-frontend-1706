@@ -10,4 +10,4 @@ const fetch_search = async (url, signal) => {
             return null;
         });
 }
-module.exports = { fetch_search };
+export { fetch_search };

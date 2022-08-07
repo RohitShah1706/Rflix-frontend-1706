@@ -2,7 +2,7 @@ import { Form, Container } from 'react-bootstrap';
 import "./SearchPage.scss";
 import { useEffect, useState } from 'react';
 import DisplayCards from "./DisplayCards";
-const { fetch_search } = require('./fetch_search');
+import { fetch_search } from "./fetch_search";
 const SearchPage = () => {
     const [searchValue, setSearchValue] = useState("");
     const [searchResults, setSearchResults] = useState([]);
