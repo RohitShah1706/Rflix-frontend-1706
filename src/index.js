@@ -10,6 +10,7 @@ import FeaturedSingleMovie from "./components/singleMovie/FeaturedSingleMovie.js
 import CardSingleMovie from './components/singleMovie/CardSingleMovie.js';
 import CardSingleSeries from "./components/singleMovie/CardSingleSeries.js";
 import SearchPage from './components/SearchPage/SearchPage.js';
+import MyList from './components/MyList/MyList';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -24,7 +25,7 @@ root.render(
       <Route path="/search" element={<SearchPage />} />
       <Route path="/movies/:genre" element={< MoviesPage />} />
       <Route path="/series/:genre" element={<SeriesPage />} />
-      <Route path="/invoices" element={<App />} />
+      <Route path="/mylist" element={<MyList />} />
     </Routes>
   </BrowserRouter>
 );

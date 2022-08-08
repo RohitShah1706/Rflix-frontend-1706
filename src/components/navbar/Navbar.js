@@ -7,9 +7,13 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { dropdownitems } from "./dropdown-items";
 import logo from '../../assets/images/logo.png';
-
+import { fireBaseLogout } from '../firebaseAuth/fireBaseLogout';
+import { fireBaseSignIn } from '../firebaseAuth/fireBaseSignIn';
+import { getAuth } from "firebase/auth";
+import { app } from '../firebaseAuth/firebaseConfig';
 function Navigation() {
     const [userLoggedIn, setUserLoggedIn] = useState(false);
+    const [userDetails, setUserDetails] = useState({});
     const [showDropdown, setShowDropdown] = useState("");
 
     const DisplayDropdown = () => {
@@ -19,18 +23,40 @@ function Navigation() {
                 <NavDropdown.Item href={`${showDropdown}/${item.toLowerCase()}`} key={index}>{item}</NavDropdown.Item >
             )
         })
+    }
 
+    const signInWithFirebase = () => {
+        // sign in with firebase
+        fireBaseSignIn();
+    }
+    const signOutWithFirebase = () => {
+        // sign out with firebase
+        fireBaseLogout();
     }
     useEffect(() => {
         let urlIntab = window.location.href;
-        console.log("this is the link in tab", urlIntab);
         if (urlIntab.includes("/movies")) {
             setShowDropdown("/movies");
         }
         else if (urlIntab.includes("/series") && !urlIntab.includes("/cardsingle")) {
             setShowDropdown("/series");
         }
-    }, [])
+
+        // google logged in check
+        const auth = getAuth(app);
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                setUserLoggedIn(true);
+                setUserDetails(user);
+            } else {
+                setUserLoggedIn(false);
+                if (urlIntab.includes("/mylist")) {
+                    // redirect to home page
+                    window.location.href = "/";
+                }
+            }
+        });
+    }, [userLoggedIn])
     return (
         <Navbar bg="dark" variant="dark" expand="lg" className="'navbar sticky-top" fixed="top">
             <Container fluid>
@@ -42,7 +68,7 @@ function Navigation() {
                         <NavLink href="/movies/genre">Movies</NavLink>
                         <NavLink href="/series/genre">Series</NavLink>
                         {/* <Nav.Link href="/latest">Latest</Nav.Link> */}
-                        <Nav.Link href="#mylist">My List</Nav.Link>
+                        {userLoggedIn ? <NavLink href="/mylist">My List</NavLink> : ""}
                         {showDropdown != "" ?
                             <NavDropdown title="Genre" id="basic-nav-dropdown"  >
                                 <DisplayDropdown />
@@ -54,6 +80,24 @@ function Navigation() {
                     <Link to="/search">
                         <Button variant="outline-dark"><FaSearch style={{ color: "white", fontSize: "1.5em" }} /></Button>
                     </Link>
+                    <div className='right-profile active'>
+                        {userLoggedIn ?
+                            <>
+                                <span>{userDetails.displayName.split(" ")[0]}</span>
+                                <img
+                                    src={userDetails.photoURL}
+                                    alt=""
+                                />
+                                <Button className="login-with-google-btn" onClick={signOutWithFirebase}>
+                                    Logout
+                                </Button>
+                            </>
+                            :
+                            <Button className="login-with-google-btn" onClick={signInWithFirebase}>
+                                Sign in
+                            </Button>
+                        }
+                    </div>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
