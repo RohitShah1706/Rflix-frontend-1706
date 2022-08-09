@@ -5,11 +5,51 @@ import { Button } from 'react-bootstrap';
 import './SingleMovie.scss';
 import { FcPlus } from "react-icons/fc";
 import { IoLogoYoutube } from "react-icons/io";
+import { getAuth } from "firebase/auth";
+import { app } from '../firebaseAuth/firebaseConfig';
+import { addToMyList } from "../MyList/addToMyList";
 const CardSingleSeries = () => {
     const imdbId = useParams().id;
     const [movie, setMovie] = useState({});
     const [youtubeUrl, setYoutubeUrl] = useState("");
     const [youtubeActive, setYoutubeActive] = useState(false);
+    const [userLoggedIn, setUserLoggedIn] = useState(false);
+    const [userDetails, setUserDetails] = useState({});
+    const [imdbdIdToAdd, setimdbdIdToAdd] = useState({
+        imdbId: "",
+        poster_path: "",
+        name: "",
+        movie: true
+    });
+
+    const getImdbId = (tmdbId) => {
+        const url = `https://api.themoviedb.org/3/tv/${tmdbId}/external_ids?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`;
+        getMovie(url)
+            .then(result => {
+                // set only imdb id of imdbidtoadd
+                setimdbdIdToAdd(prevState => {
+                    return { ...prevState, imdbId: result.imdb_id, movie: false, name: movie.original_title || movie.original_name }
+                })
+            })
+    }
+
+    const postToMyList = () => {
+        alert(`${(movie.original_title || movie.original_name).toUpperCase()} added to my list !!! with imdbId ${imdbdIdToAdd.imdbId} and type ${imdbdIdToAdd.movie ? "movie" : "tv"}`);
+        addToMyList({ user: userDetails, imdbdIdToAdd: imdbdIdToAdd });
+    }
+
+    useEffect(() => {
+        // google logged in check
+        const auth = getAuth(app);
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                setUserLoggedIn(true);
+                setUserDetails(user);
+            } else {
+                setUserLoggedIn(false);
+            }
+        });
+    }, [userLoggedIn])
 
     useEffect(() => {
         var url = `https://api.themoviedb.org/3/find/${imdbId}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&external_source=imdb_id`
@@ -21,6 +61,11 @@ const CardSingleSeries = () => {
                     getMovie(url)
                         .then(getSeriesReponse => {
                             setMovie(getSeriesReponse);
+                            getImdbId(getSeriesReponse.id);
+                            // then set the object to be sent
+                            setimdbdIdToAdd(prevState => {
+                                return { ...prevState, movie: false, name: getSeriesReponse.original_name || getSeriesReponse.original_title || getSeriesReponse.name, poster_path: getSeriesReponse.poster_path }
+                            })
                             getSeriesName = getSeriesReponse.name;
                             const name = getSeriesName.split(" ").join("%20");
                             url = `${process.env.REACT_APP_SERIES_YOUTUBE_TRAILER_URL}${name}`
@@ -38,6 +83,10 @@ const CardSingleSeries = () => {
                     // now we've name - make request to backend to get the embedded youtube link
                     // split name and join using %20
                     getSeriesName = getSeriesName.tv_results[0];
+                    setimdbdIdToAdd(prevState => {
+                        return { ...prevState, poster_path: getSeriesName.poster_path, movie: false, name: getSeriesName.name || getSeriesName.original_name || getSeriesName.original_title }
+                    })
+                    getImdbId(getSeriesName.id);
                     const name = getSeriesName.name.split(" ").join("%20");
                     url = `${process.env.REACT_APP_SERIES_YOUTUBE_TRAILER_URL}${name}`
                     getMovie(url)
@@ -76,7 +125,8 @@ const CardSingleSeries = () => {
                                 <h1 className="item__title">{movie.original_title || movie.original_name}</h1>
                                 <span className="item__overview">{movie.overview}</span>
                                 <div className="item__overview">
-                                    <Button variant="outline-dark" className='button'><FcPlus style={{ fontSize: "3.2em" }} /></Button>
+                                    {userLoggedIn ? <Button variant="outline-dark" className='button'><FcPlus style={{ fontSize: "3.2em" }} onClick={postToMyList} /></Button> :
+                                        ""}
                                     <Button variant="outline-dark" className='button' onClick={unhideYoutube}><IoLogoYoutube style={{ color: "red", fontSize: "3.2em" }} /></Button>
                                 </div>
                                 {/* EMBEDDED YOUTUBE PLAYER */}

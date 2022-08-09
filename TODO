@@ -1,0 +1,34 @@
+NEW THINGS USED ->
+1) REACT ICONS FOR ICONS - GET ICONS FROM HERE (USE FONT AWESOME ICONS AND IMPORT {} FROM 'react-icons/fa') = https://react-icons.github.io/react-icons/icons?name=fa
+2) REACT BOOTSTRAP FOR NAVBAR AND MANY PRE BUILT IN COMPONENTS
+3) FACED FS ERRORS WITH DOTENV PACKAGE - fixed with dotenv webpack = https://github.com/mrsteele/dotenv-webpack/blob/master/README.md
+4) USING REACT-DEVICE-DETECT - to find out if user is on mobile or desktop - then render content accordingly = https://www.npmjs.com/package/react-device-detect ===> Check out Featured.js that used BrowserView and MobileView
+5) HARDEST THING - REQUEST DATA FROM API - TAKES TIME SO THE STATE IS NOT UPDATED AND WE RENDER BLANK LIST - INSTEAD RETURN PROMISE AND THEN WHEN PROMISE IS RESOLVED THEN WE SET THE STATE AND THEN REACT SEES THAT THE STATE OF COMPONENT HAS CHANGED AND RERENDERS THE COMPONENT = see featured_get.js and Featured.js
+6) React is annoying - it auto compiles when some code is changed but when env files are added or changed it doesn't update itself to take on the new values - case sensitive - like allowfullscreen is actually allowFullScreen in youtube embed player
+7) How to extract url from tab = window.location.href
+8) VIMP - ABORT CONTROLLER FOR FETCH API - Basically the search bar makes request to backend for every change of character in search bar (google like) but sometimes we need to wait for the user to complete typing whole word or a keyword  - See SearchPage.js - Watch - https://www.youtube.com/watch?v=0Be9Ez14e6M - Refer to https://developer.mozilla.org/en-US/docs/Web/API/AbortController/AbortController
+9) Fetching data from two different api's (TMDB AND IMDB) and so harder to integrate the components - see featured_get.js and Featured.js
+
+
+DONE
+Implement featured image and text on the big cover image - using carousel of react - bootstrap
+Implement search icon and on clicking make the search bar visiblle
+Implement dark background for whole body
+Implement react router dom in navbar for anchor links
+Implement dropdown in navbar for movies and series
+
+PENDING
+Implement ajax call to get the data from the API at every change but cancel ongonig requests if the user is typing and display the final search result only
+Implement add profile photo and (sign/in or login)/logout button
+Implement fade-in fade-out animations for the search icon
+Implement navbar fixed at top
+Implement logout profile page in the navbar - isUserLoggedIn handles whether to show the profile tab to the user or not
+Make website responsive
+
+
+FROM FEATURED TAB - PARMAS = TMDBID (FEATUREDSINGLEMOVIE COMPONENT) - but can get imdb_id from here too
+https://api.themoviedb.org/3/movie/585511?api_key=c58333d0c4ab6f93e254d8d34d142f68&language=en-US
+https://api.themoviedb.org/3/tv/585511?api_key=c58333d0c4ab6f93e254d8d34d142f68&language=en-US
+
+FROM (CARDSINGLEMOVIE & CARDSINGLESERIES COMPONENT) 
+FROM TOP MOVIES, SERIES, IN THEATRES - PARMAS = IMDBID

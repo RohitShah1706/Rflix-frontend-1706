@@ -5,11 +5,43 @@ import { Button } from 'react-bootstrap';
 import './SingleMovie.scss';
 import { FcPlus } from "react-icons/fc";
 import { IoLogoYoutube } from "react-icons/io";
+import { getAuth } from "firebase/auth";
+import { app } from '../firebaseAuth/firebaseConfig';
+import { addToMyList } from "../MyList/addToMyList";
+
+
+
 const FeaturedSingleMovie = () => {
     const tmdbId = useParams().id;
     const [movie, setMovie] = useState({});
     const [youtubeUrl, setYoutubeUrl] = useState("");
     const [youtubeActive, setYoutubeActive] = useState(false);
+    const [userLoggedIn, setUserLoggedIn] = useState(false);
+    const [userDetails, setUserDetails] = useState({});
+    const [imdbdIdToAdd, setimdbdIdToAdd] = useState({
+        imdbId: "",
+        poster_path: "",
+        name: "",
+        movie: true
+    });
+
+    const getImdbId = (tmdbId) => {
+        const url = `https://api.themoviedb.org/3/tv/${tmdbId}/external_ids?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`;
+        getMovie(url)
+            .then(result => {
+                // set only imdb id of imdbidtoadd
+                setimdbdIdToAdd(prevState => {
+                    return { ...prevState, imdbId: result.imdb_id, movie: false, name: movie.original_title || movie.original_name }
+                })
+            })
+    }
+
+    const postToMyList = () => {
+        alert(`${(movie.original_title || movie.original_name).toUpperCase()} added to my list !!! with imdbId ${imdbdIdToAdd.imdbId} and type ${imdbdIdToAdd.movie ? "movie" : "tv"}`);
+        addToMyList({ user: userDetails, imdbdIdToAdd: imdbdIdToAdd });
+    }
+
+
 
     useEffect(() => {
         var url = `https://api.themoviedb.org/3/movie/${tmdbId}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`;
@@ -18,10 +50,13 @@ const FeaturedSingleMovie = () => {
                 if (result === 404) {
                     url = `https://api.themoviedb.org/3/tv/${tmdbId}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`;
                     // take this url and get the name for the series
+                    getImdbId(tmdbId);
                     getMovie(url)
                         .then(getSeriesName => {
                             setMovie(getSeriesName);
-                            console.log(url, getSeriesName);
+                            setimdbdIdToAdd(prevState => {
+                                return { ...prevState, poster_path: getSeriesName.poster_path }
+                            })
                             // now we've name - make request to backend to get the embedded youtube link
                             // split name and join using %20
                             const name = getSeriesName.name.split(" ").join("%20");
@@ -40,6 +75,12 @@ const FeaturedSingleMovie = () => {
                 }
                 else {
                     setMovie(result);
+                    setimdbdIdToAdd({
+                        imdbId: result.imdb_id,
+                        poster_path: result.poster_path,
+                        movie: true,
+                        name: result.original_title || result.original_name
+                    });
                     url = `${process.env.REACT_APP_YOUTUBE_TRAILER_BASE_URL}${result.imdb_id}`
                     getMovie(url)
                         .then(result => {
@@ -54,6 +95,18 @@ const FeaturedSingleMovie = () => {
                 console.log(err);
             });
     }, []);
+    useEffect(() => {
+        // google logged in check
+        const auth = getAuth(app);
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                setUserLoggedIn(true);
+                setUserDetails(user);
+            } else {
+                setUserLoggedIn(false);
+            }
+        });
+    }, [userLoggedIn])
 
     const unhideYoutube = () => {
         setYoutubeActive(!youtubeActive);
@@ -76,7 +129,8 @@ const FeaturedSingleMovie = () => {
                                 <h1 className="item__title">{movie.original_title || movie.original_name}</h1>
                                 <span className="item__overview">{movie.overview}</span>
                                 <div className="item__overview">
-                                    <Button variant="outline-dark" className='button'><FcPlus style={{ fontSize: "3.2em" }} /></Button>
+                                    {userLoggedIn ? <Button variant="outline-dark" className='button'><FcPlus style={{ fontSize: "3.2em" }} onClick={postToMyList} /></Button> :
+                                        ""}
                                     <Button variant="outline-dark" className='button' onClick={unhideYoutube}><IoLogoYoutube style={{ color: "red", fontSize: "3.2em" }} /></Button>
                                 </div>
                                 {/* EMBEDDED YOUTUBE PLAYER */}

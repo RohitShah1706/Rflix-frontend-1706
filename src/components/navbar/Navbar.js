@@ -11,6 +11,18 @@ import { fireBaseLogout } from '../firebaseAuth/fireBaseLogout';
 import { fireBaseSignIn } from '../firebaseAuth/fireBaseSignIn';
 import { getAuth } from "firebase/auth";
 import { app } from '../firebaseAuth/firebaseConfig';
+const axios = require('axios');
+const sendSignInDetails = (user) => {
+    axios.post(`${process.env.REACT_APP_USER_SIGN_IN_BASE_URL}signin/`, {
+        data: user
+    })
+        .then(res => {
+            // console.log(res);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+}
 function Navigation() {
     const [userLoggedIn, setUserLoggedIn] = useState(false);
     const [userDetails, setUserDetails] = useState({});
@@ -27,7 +39,15 @@ function Navigation() {
 
     const signInWithFirebase = () => {
         // sign in with firebase
-        fireBaseSignIn();
+        fireBaseSignIn()
+            .then(user => {
+                if (user) {
+                    sendSignInDetails(user);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
     const signOutWithFirebase = () => {
         // sign out with firebase

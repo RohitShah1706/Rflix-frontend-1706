@@ -1,0 +1,22 @@
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    .card-body {
+        margin: 10px 0px;
+        // padding-left: 28px;
+        justify-content: center;
+    }
+}
+
+.movies-container {
+    background: var(--main-color);
+    // color: white;
+}
+
+.card-body {
+    background: var(--main-color);
+    color: white;
+}

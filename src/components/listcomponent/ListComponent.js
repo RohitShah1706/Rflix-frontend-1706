@@ -24,30 +24,30 @@ const ListComponent = () => {
 
     // getting the first 15 movies and series from the backend server
     useEffect(() => {
-        fetchData(`${process.env.REACT_APP_IMDB_API_MOVIES_BASE_URL}/15`)
-            .then((result) => {
-                setTopMoviesList(result);
-            })
-            .catch((err) => {
-                console.log(err);
-                return null;
-            })
-        fetchData(`${process.env.REACT_APP_IMDB_API_SERIES_BASE_URL}/15`)
-            .then((result) => {
-                setTopTvSeriesList(result);
-            })
-            .catch((err) => {
-                console.log(err);
-                return null;
-            })
-        fetchData(`${process.env.REACT_APP_IMDB_API_IN_THEATRES_BASE_URL}/15`)
-            .then((result) => {
-                setInTheatres(result);
-            })
-            .catch((err) => {
-                console.log(err);
-                return null;
-            })
+        // fetchData(`${process.env.REACT_APP_IMDB_API_MOVIES_BASE_URL}/15`)
+        //     .then((result) => {
+        //         setTopMoviesList(result);
+        //     })
+        //     .catch((err) => {
+        //         console.log(err);
+        //         return null;
+        //     })
+        // fetchData(`${process.env.REACT_APP_IMDB_API_SERIES_BASE_URL}/15`)
+        //     .then((result) => {
+        //         setTopTvSeriesList(result);
+        //     })
+        //     .catch((err) => {
+        //         console.log(err);
+        //         return null;
+        //     })
+        // fetchData(`${process.env.REACT_APP_IMDB_API_IN_THEATRES_BASE_URL}/15`)
+        //     .then((result) => {
+        //         setInTheatres(result);
+        //     })
+        //     .catch((err) => {
+        //         console.log(err);
+        //         return null;
+        //     })
     }, []);
     return (
         <Container fluid>
