@@ -13,6 +13,7 @@ import { getAuth } from "firebase/auth";
 import { app } from '../firebaseAuth/firebaseConfig';
 const axios = require('axios');
 const sendSignInDetails = (user) => {
+    console.log("inside send sign in details")
     axios.post(`${process.env.REACT_APP_USER_SIGN_IN_BASE_URL}signin/`, {
         data: user
     })
@@ -42,7 +43,7 @@ function Navigation() {
         fireBaseSignIn()
             .then(user => {
                 if (user) {
-                    sendSignInDetails(user);
+                    // sendSignInDetails(user);
                 }
             })
             .catch(err => {
@@ -68,6 +69,7 @@ function Navigation() {
             if (user) {
                 setUserLoggedIn(true);
                 setUserDetails(user);
+                sendSignInDetails(user);
             } else {
                 setUserLoggedIn(false);
                 if (urlIntab.includes("/mylist")) {
