@@ -32,7 +32,7 @@ const CardSingleMovie = () => {
             })
     }
     const postToMyList = () => {
-        alert(`${(movie.original_title || movie.original_name).toUpperCase()} added to my list !!! with imdbId ${imdbdIdToAdd.imdbId} and type ${imdbdIdToAdd.movie ? "movie" : "tv"}`);
+        alert(`${(movie.original_title || movie.original_name).toUpperCase()} added to your list.`);
         addToMyList({ user: userDetails, imdbdIdToAdd: imdbdIdToAdd });
     }
 

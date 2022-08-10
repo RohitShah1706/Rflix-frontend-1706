@@ -13,7 +13,6 @@ import { getAuth } from "firebase/auth";
 import { app } from '../firebaseAuth/firebaseConfig';
 const axios = require('axios');
 const sendSignInDetails = (user) => {
-    console.log("inside send sign in details")
     axios.post(`${process.env.REACT_APP_USER_SIGN_IN_BASE_URL}signin/`, {
         data: user
     })
