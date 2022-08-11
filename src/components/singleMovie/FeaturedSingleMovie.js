@@ -60,7 +60,7 @@ const FeaturedSingleMovie = () => {
                             // now we've name - make request to backend to get the embedded youtube link
                             // split name and join using %20
                             const name = getSeriesName.name.split(" ").join("%20");
-                            url = `${process.env.REACT_APP_SERIES_YOUTUBE_TRAILER_URL}${name}`
+                            url = `${process.env.REACT_APP_SERIES_YOUTUBE_TRAILER_URL}${tmdbId}`
                             getMovie(url)
                                 .then(result => {
                                     setYoutubeUrl(result.embedlink);

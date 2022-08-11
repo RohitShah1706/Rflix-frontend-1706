@@ -68,7 +68,7 @@ const CardSingleSeries = () => {
                             })
                             getSeriesName = getSeriesReponse.name;
                             const name = getSeriesName.split(" ").join("%20");
-                            url = `${process.env.REACT_APP_SERIES_YOUTUBE_TRAILER_URL}${name}`
+                            url = `${process.env.REACT_APP_SERIES_YOUTUBE_TRAILER_URL}${imdbId}`
                             getMovie(url)
                                 .then(result => {
                                     setYoutubeUrl(result.embedlink);
@@ -88,7 +88,7 @@ const CardSingleSeries = () => {
                     })
                     getImdbId(getSeriesName.id);
                     const name = getSeriesName.name.split(" ").join("%20");
-                    url = `${process.env.REACT_APP_SERIES_YOUTUBE_TRAILER_URL}${name}`
+                    url = `${process.env.REACT_APP_SERIES_YOUTUBE_TRAILER_URL}${imdbId}`
                     getMovie(url)
                         .then(result => {
                             setYoutubeUrl(result.embedlink);
