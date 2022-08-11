@@ -31,7 +31,7 @@ const FeaturedSingleMovie = () => {
             .then(result => {
                 // set only imdb id of imdbidtoadd
                 setimdbdIdToAdd(prevState => {
-                    return { ...prevState, imdbId: result.imdb_id, movie: false, name: movie.original_title || movie.original_name }
+                    return { ...prevState, imdbId: result.imdb_id, movie: false, name: movie.original_title || movie.original_name|| movie.name }
                 })
             })
     }
@@ -79,7 +79,7 @@ const FeaturedSingleMovie = () => {
                         imdbId: result.imdb_id,
                         poster_path: result.poster_path,
                         movie: true,
-                        name: result.original_title || result.original_name
+                        name: result.original_title || result.original_name || result.name
                     });
                     url = `${process.env.REACT_APP_YOUTUBE_TRAILER_BASE_URL}${result.imdb_id}`
                     getMovie(url)

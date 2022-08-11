@@ -28,7 +28,7 @@ const CardSingleSeries = () => {
             .then(result => {
                 // set only imdb id of imdbidtoadd
                 setimdbdIdToAdd(prevState => {
-                    return { ...prevState, imdbId: result.imdb_id, movie: false, name: movie.original_title || movie.original_name }
+                    return { ...prevState, imdbId: result.imdb_id, movie: false, name: movie.original_title || movie.original_name || movie.name }
                 })
             })
     }
