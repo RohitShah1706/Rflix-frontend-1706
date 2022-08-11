@@ -5,7 +5,7 @@ import { FaSearch } from 'react-icons/fa';
 import { MdNotificationsNone } from 'react-icons/md';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { dropdownitems } from "./dropdown-items";
+import { dropdownitemsMovies, dropdownitemSeries } from "./dropdown-items";
 import logo from '../../assets/images/logo.png';
 import { fireBaseLogout } from '../firebaseAuth/fireBaseLogout';
 import { fireBaseSignIn } from '../firebaseAuth/fireBaseSignIn';
@@ -27,12 +27,13 @@ function Navigation() {
     const [userLoggedIn, setUserLoggedIn] = useState(false);
     const [userDetails, setUserDetails] = useState({});
     const [showDropdown, setShowDropdown] = useState("");
+    const [dropDownItems, setDropDownItems] = useState([]);
 
     const DisplayDropdown = () => {
         // iterate through dropdown items and display
-        return dropdownitems.map((item, index) => {
+        return dropDownItems.map((item, index) => {
             return (
-                <NavDropdown.Item href={`${showDropdown}/${item.toLowerCase()}`} key={index}>{item}</NavDropdown.Item >
+                <NavDropdown.Item href={`${showDropdown}/${item.id}`} key={index}>{item.name}</NavDropdown.Item >
             )
         })
     }
@@ -57,9 +58,11 @@ function Navigation() {
         let urlIntab = window.location.href;
         if (urlIntab.includes("/movies")) {
             setShowDropdown("/movies");
+            setDropDownItems(dropdownitemsMovies);
         }
         else if (urlIntab.includes("/series") && !urlIntab.includes("/cardsingle")) {
             setShowDropdown("/series");
+            setDropDownItems(dropdownitemSeries);
         }
 
         // google logged in check

@@ -10,9 +10,9 @@ const ListCard = (props) => {
         if (movies) {
             return movies.map((item, index) => {
                 return (
-                    <Link to={`/cardsingle/${item.id}`} key={item.id}>
-                        <Card style={{ width: '13rem' }} className='list-card'>
-                            <CardImg variant="top" src={item.image} />
+                    <Link to={props.movie ? `/cardsingle/${item.id}` : `/cardsingle/series/${item.id}`} key={item.id}>
+                        <Card style={{ width: '10rem' }} className='list-card'>
+                            <CardImg variant="top" src={item.image || `https://image.tmdb.org/t/p/original${item.poster_path}`} />
                         </Card>
 
                     </Link>
@@ -58,7 +58,7 @@ const ListCard = (props) => {
                             max: 464,
                             min: 0
                         },
-                        items: 1,
+                        items: 2,
                         partialVisibilityGutter: 30
                     },
                     tablet: {

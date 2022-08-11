@@ -54,19 +54,19 @@ const ListComponent = () => {
             <div className="list">
                 <span className="list-title">Top Movies</span>
                 <div className="wrapper">
-                    <ListCard list={topMoviesList} />
+                    <ListCard list={topMoviesList} movie={true} />
                 </div>
             </div>
             <div className="list">
                 <span className="list-title">Top TV Series</span>
                 <div className="wrapper">
-                    <ListCard list={topTvSeriesList} />
+                    <ListCard list={topTvSeriesList} movie={false} />
                 </div>
             </div>
             <div className="list">
                 <span className="list-title">In Theatres</span>
                 <div className="wrapper">
-                    <ListCard list={inTheatres} />
+                    <ListCard list={inTheatres} movie={true} />
                 </div>
             </div>
 
