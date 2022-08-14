@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getMovie } from "./getMovie";
+import { getNewRoom } from "../videoChat/getNewRoom";
 import { Button } from 'react-bootstrap';
 import './SingleMovie.scss';
 import { FcPlus } from "react-icons/fc";
+import { BsCameraVideo } from "react-icons/bs";
 import { IoLogoYoutube } from "react-icons/io";
 import { getAuth } from "firebase/auth";
 import { app } from '../firebaseAuth/firebaseConfig';
@@ -24,6 +26,7 @@ const FeaturedSingleMovie = () => {
         name: "",
         movie: true
     });
+    const [meetingRoomUrl, setMeetingRoomUrl] = useState("");
 
     const getImdbId = (tmdbId) => {
         const url = `https://api.themoviedb.org/3/tv/${tmdbId}/external_ids?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`;
@@ -31,7 +34,7 @@ const FeaturedSingleMovie = () => {
             .then(result => {
                 // set only imdb id of imdbidtoadd
                 setimdbdIdToAdd(prevState => {
-                    return { ...prevState, imdbId: result.imdb_id, movie: false, name: movie.original_title || movie.original_name|| movie.name }
+                    return { ...prevState, imdbId: result.imdb_id, movie: false, name: movie.original_title || movie.original_name || movie.name }
                 })
             })
     }
@@ -41,7 +44,15 @@ const FeaturedSingleMovie = () => {
         addToMyList({ user: userDetails, imdbdIdToAdd: imdbdIdToAdd });
     }
 
+    const assignNewRoom = () => {
+        getNewRoom()
+            .then(result => {
+                setMeetingRoomUrl(result.url);
+                // open this url in a new tab
+                window.open(result.url);
+            })
 
+    }
 
     useEffect(() => {
         var url = `https://api.themoviedb.org/3/movie/${tmdbId}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`;
@@ -132,6 +143,8 @@ const FeaturedSingleMovie = () => {
                                     {userLoggedIn ? <Button variant="outline-dark" className='button'><FcPlus style={{ fontSize: "3.2em" }} onClick={postToMyList} /></Button> :
                                         ""}
                                     <Button variant="outline-dark" className='button' onClick={unhideYoutube}><IoLogoYoutube style={{ color: "red", fontSize: "3.2em" }} /></Button>
+                                    {userLoggedIn ? <Button variant="outline-light" className='button'><BsCameraVideo style={{ fontSize: "3.2em" }} onClick={assignNewRoom} /></Button> :
+                                        ""}
                                 </div>
                                 {/* EMBEDDED YOUTUBE PLAYER */}
                                 <div className="video-container">
