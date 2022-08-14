@@ -7,13 +7,14 @@ import './SingleMovie.scss';
 import { FcPlus } from "react-icons/fc";
 import { BsCameraVideo } from "react-icons/bs";
 import { IoLogoYoutube } from "react-icons/io";
+import { FcClapperboard } from "react-icons/fc";
 import { getAuth } from "firebase/auth";
 import { app } from '../firebaseAuth/firebaseConfig';
 import { addToMyList } from "../MyList/addToMyList";
+const axios = require('axios');
 
 
-
-const FeaturedSingleMovie = () => {
+const FeaturedSingleMovie = (props) => {
     const tmdbId = useParams().id;
     const [movie, setMovie] = useState({});
     const [youtubeUrl, setYoutubeUrl] = useState("");
@@ -26,6 +27,8 @@ const FeaturedSingleMovie = () => {
         name: "",
         movie: true
     });
+    const [movieEmbedActive, setMovieEmbedActive] = useState(false);
+    const [movieEmbedUrl, setMovieEmbedUrl] = useState("");
     const [meetingRoomUrl, setMeetingRoomUrl] = useState("");
 
     const getImdbId = (tmdbId) => {
@@ -52,6 +55,30 @@ const FeaturedSingleMovie = () => {
                 window.open(result.url);
             })
 
+    }
+    const getMovieEmbedUrl = () => {
+        setYoutubeActive(false);
+        if (!movieEmbedActive) {
+            if (tmdbId.substring(0, 2) == "tt") {
+                // url contains valid imdb id - so just get the embedded movie url and display it in the video player
+                setMovieEmbedUrl(`${process.env.REACT_APP_GET_MOVIE_EMBED_URL}${tmdbId}`);
+                setMovieEmbedActive(true);
+            }
+            else {
+                // first get imdb id of movie or series then normal set the url
+                const url = `https://api.themoviedb.org/3/movie/${tmdbId}/external_ids?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`;
+                axios.get(url)
+                    .then(result => {
+                        setMovieEmbedUrl(`${process.env.REACT_APP_GET_MOVIE_EMBED_URL}${result.data.imdb_id}`);
+                        setMovieEmbedActive(true);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            }
+        } else {
+            setMovieEmbedActive(false);
+        }
     }
 
     useEffect(() => {
@@ -120,6 +147,7 @@ const FeaturedSingleMovie = () => {
     }, [userLoggedIn])
 
     const unhideYoutube = () => {
+        setMovieEmbedActive(false);
         setYoutubeActive(!youtubeActive);
     }
     return (
@@ -143,12 +171,17 @@ const FeaturedSingleMovie = () => {
                                     {userLoggedIn ? <Button variant="outline-dark" className='button'><FcPlus style={{ fontSize: "3.2em" }} onClick={postToMyList} /></Button> :
                                         ""}
                                     <Button variant="outline-dark" className='button' onClick={unhideYoutube}><IoLogoYoutube style={{ color: "red", fontSize: "3.2em" }} /></Button>
+
                                     {userLoggedIn ? <Button variant="outline-light" className='button'><BsCameraVideo style={{ fontSize: "3.2em" }} onClick={assignNewRoom} /></Button> :
                                         ""}
+                                    {props.allowPiracy ?
+                                        <Button variant="outline-dark" className='button'><FcClapperboard style={{ color: "red", fontSize: "3.2em" }} onClick={getMovieEmbedUrl} /></Button>
+                                        : ""}
                                 </div>
                                 {/* EMBEDDED YOUTUBE PLAYER */}
                                 <div className="video-container">
                                     {youtubeActive ? <iframe width="560" height="315" src={youtubeUrl} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="youtube-player"></iframe> : ""}
+                                    {movieEmbedActive ? <iframe width="560" height="315" src={movieEmbedUrl} title="" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="youtube-player"></iframe> : ""}   
                                 </div>
                             </div>
                         </div>

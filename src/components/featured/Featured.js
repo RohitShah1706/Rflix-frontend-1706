@@ -13,7 +13,7 @@ const Featured = () => {
     useEffect(() => {
         featured_get()
             .then(result => {
-                setFeatured(result.results);
+                setFeatured(result);
             })
             .catch(err => {
                 console.log(err);
