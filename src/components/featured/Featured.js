@@ -25,7 +25,7 @@ const Featured = () => {
             <img
                 className="d-block w-100"
                 src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
-                alt="First slide"
+                alt={`Featured image for movie - ${movie.title}`}
             />
             {/* BROWSER VIEW - means render only on browsers */}
             <BrowserView>

@@ -170,7 +170,7 @@ const CardSingleMovie = (props) => {
             }
         });
     }, [userLoggedIn])
-    
+
     const unhideYoutube = () => {
         setMovieEmbedActive(false);
         setYoutubeActive(!youtubeActive);
@@ -180,14 +180,14 @@ const CardSingleMovie = (props) => {
             <div className="item-page">
                 <img
                     src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
-                    alt=""
+                    alt={`Card image for ${movie.name || movie.title}`}
                     className="item-page__bg"
                 />
                 <div className="item">
                     <div className="item__outer">
                         <div className="item__inner">
                             <div className="item__img-box">
-                                <img src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} alt="poster" className="item__poster-img" />
+                                <img src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} alt={`Card image for ${movie.name || movie.title}`} className="item__poster-img" />
                             </div>
                             <div className="item__text-box">
                                 <h1 className="item__title">{movie.original_title || movie.original_name}</h1>
