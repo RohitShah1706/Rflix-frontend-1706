@@ -9,7 +9,7 @@ NEW THINGS USED ->
 8) VIMP - ABORT CONTROLLER FOR FETCH API - Basically the search bar makes request to backend for every change of character in search bar (google like) but sometimes we need to wait for the user to complete typing whole word or a keyword  - See SearchPage.js - Watch - https://www.youtube.com/watch?v=0Be9Ez14e6M - Refer to https://developer.mozilla.org/en-US/docs/Web/API/AbortController/AbortController
 9) Fetching data from two different api's (TMDB AND IMDB) and so harder to integrate the components - see featured_get.js and Featured.js
 10) Implemented firebase google authentication - see firebaseAuth in components - REFERENCE (Basic tutorial = https://www.youtube.com/watch?v=vDT7EnUpEoo)  (Protected routes = https://www.youtube.com/watch?v=6kgitEWTxac)  
-11) Optimizing for SEO - (Favicon generator, generate and paste the code in pubic folder and extract the icons there  = https://www.favicon-generator.org/) (Compress static images to display = https://compressjpg.net/) (Provide helpful & specific description of images in alt attribute of image element)
+11) Optimizing for SEO - (Favicon generator, generate and paste the code in pubic folder and extract the icons there  = https://www.favicon-generator.org/) (Compress static images to display = https://compressjpg.net/) (Provide helpful & specific description of images in alt attribute of image element) (What is SEO = https://www.youtube.com/watch?v=gmB_TC92I8w) (Use google search console = https://www.youtube.com/watch?v=HetaNOE5378)
 
 DONE
 Implement featured image and text on the big cover image - using carousel of react - bootstrap
