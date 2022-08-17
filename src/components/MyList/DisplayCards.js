@@ -13,7 +13,7 @@ const DisplayCards = (props) => {
                         if (item.poster_path) {
                             return (
                                 <div className="card-body col-sm-6 col-md-4 col-lg-3 col-xl-2 d-flex justify-content-center" key={item.imdbId}>
-                                    <Link to={`/cardsingle/${item.imdbId}`} key={index} style={{ textDecoration: "none" }}>
+                                    <Link to={item.movie === "true" ? `/cardsingle/${item.imdbId}` : `/cardsingle/series/${item.imdbId}`} key={index} style={{ textDecoration: "none" }}>
                                         <Card style={{ width: "16rem" }} className="card-body">
                                             <Card.Img variant="top" src={item.image || `https://image.tmdb.org/t/p/original${item.poster_path}`} alt={`Card image for ${item.name || item.title}`} />
                                             <Card.Body >

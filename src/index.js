@@ -27,11 +27,7 @@ root.render(
       <Route path="/movies/:genre" element={< MoviesPage />} />
       <Route path="/series/:genre" element={<SeriesPage />} />
       <Route path="/mylist" element={<MyList />} />
-    </Routes>
+    </Routes>               
   </BrowserRouter>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

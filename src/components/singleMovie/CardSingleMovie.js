@@ -60,7 +60,7 @@ const CardSingleMovie = (props) => {
                 setMovieEmbedActive(true);
             }
             else {
-                // first get imdb id of movie or series then normal set the url
+                // first get imdb id of movie then normal set the url
                 const url = `https://api.themoviedb.org/3/movie/${imdbId}/external_ids?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`;
                 axios.get(url)
                     .then(result => {
