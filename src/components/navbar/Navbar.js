@@ -92,13 +92,14 @@ function Navigation() {
                         <NavLink href="/movies/genre">Movies</NavLink>
                         <NavLink href="/series/genre">Series</NavLink>
                         {/* <Nav.Link href="/latest">Latest</Nav.Link> */}
-                        {userLoggedIn ? <NavLink href="/mylist">My List</NavLink> : ""}
                         {showDropdown != "" ?
                             <NavDropdown title="Genre" id="basic-nav-dropdown"  >
                                 <DisplayDropdown />
                             </NavDropdown>
                             : ""
                         }
+                        {userLoggedIn ? <NavLink href="/mylist">My List</NavLink> : ""}
+                        <NavLink href="/contact">Contact</NavLink>
 
                     </Nav>
                     <Link to="/search">

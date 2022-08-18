@@ -10,6 +10,7 @@ NEW THINGS USED ->
 9) Fetching data from two different api's (TMDB AND IMDB) and so harder to integrate the components - see featured_get.js and Featured.js
 10) Implemented firebase google authentication - see firebaseAuth in components - REFERENCE (Basic tutorial = https://www.youtube.com/watch?v=vDT7EnUpEoo)  (Protected routes = https://www.youtube.com/watch?v=6kgitEWTxac)  
 11) Optimizing for SEO - (Favicon generator, generate and paste the code in pubic folder and extract the icons there  = https://www.favicon-generator.org/) (Compress static images to display = https://compressjpg.net/) (Provide helpful & specific description of images in alt attribute of image element) (What is SEO = https://www.youtube.com/watch?v=gmB_TC92I8w) (Use google search console = https://www.youtube.com/watch?v=HetaNOE5378)
+12) Implementing serverless email service on the frontend via email js - (Reference = https://www.youtube.com/watch?v=NgWGllOjkbs)
 
 DONE
 Implement featured image and text on the big cover image - using carousel of react - bootstrap
@@ -23,6 +24,7 @@ Integrate video chat in single moive pages with the backend
 Implemented online watch movie option - controlled by process.env.allowPiracy - check index.js for details
 Optimised website for Google SEO
 Make website responsive
+Implement email service in the contact page - @email.js
 
 PENDING
 Implement fade-in fade-out animations for the search icon
