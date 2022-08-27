@@ -2,6 +2,7 @@
     width: 100%;
     margin-top: 30px;
     margin-bottom: 30px;
+    // padding-left: 1.5em;
 
     .list-title {
         color: white;
@@ -17,4 +18,13 @@
 
 .wrapper {
     margin-top: 10px;
+}
+
+.list-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    padding: 0;
 }

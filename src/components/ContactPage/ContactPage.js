@@ -1,38 +1,60 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import emailjs from '@emailjs/browser';
 import Spline from '@splinetool/react-spline';
 import { Button } from 'react-bootstrap';
 import contactBg from "../../assets/images/contact-bg.jpg";
 import "./ContactPage.scss"
+import { getAuth } from "firebase/auth";
+import { app } from '../firebaseAuth/firebaseConfig';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const ContactPage = () => {
     const [showMap, setShowMap] = useState(false);
+    const [userLoggedIn, setUserLoggedIn] = useState(false);
+    const [userDetails, setUserDetails] = useState({});
     const formRef = useRef();
     const sendEmail = (event) => {
         event.preventDefault();
         emailjs.sendForm(`${process.env.REACT_APP_EMAILJS_SERVICEID}`, `${process.env.REACT_APP_EMAILJS_TEMPLATEID}`, formRef.current, `${process.env.REACT_APP_EMAILJS_PUBLIC_KEY}`)
             .then((result) => {
-                alert("Email sent successfully");
+                // alert("Email sent successfully");
+                toast('Email Sent Successfully !', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
             }, (error) => {
                 console.log(error.text);
             });
         event.target.reset();
     }
+    useEffect(() => {
+        // google logged in check
+        const auth = getAuth(app);
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                setUserLoggedIn(true);
+                setUserDetails(user);
+            } else {
+                setUserLoggedIn(false);
+            }
+        });
+    }, [userLoggedIn])
     return (
-        // <div className='wrapper-contact'>
-        //     <div className="contact-in">
-        //         <div className="contact-form">
-        //             <h1>Contact Us</h1>
-        //             <form onSubmit={sendEmail} ref={formRef}>
-        //                 <input type="text" placeholder='Name' name='name' required className='contact-form-txt'></input>
-        //                 <input type="text" placeholder='Subject' name='subject' className='contact-form-txt'></input>
-        //                 <input type="email" placeholder='Email' name='email' required className='contact-form-txt'></input>
-        //                 <textarea type="text" placeholder='Message' name='message' required className='contact-form-textarea' rows={8}></textarea>
-        //                 <input type="submit" name="submit" className='contact-form-btn'></input>
-        //             </form>
-        //         </div>
-        //     </div>
-        // </div >
         <div className='contact-page'>
+            <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+            />
             <iframe src='https://my.spline.design/untitled-f5a8e381442a6b067ceb056d47770ced/' frameborder='0' width='100%' height='100%' className='contact-page__bg'></iframe>
             <div className="contact">
                 <div className="contact__outer">
@@ -43,9 +65,9 @@ const ContactPage = () => {
                         <div className="contact__text-box">
                             <h1 className="contact__title">Contact Us</h1>
                             <form onSubmit={sendEmail} ref={formRef} className="contact__overview contact-in">
-                                <input type="text" placeholder='Name' name='name' required className='contact-form-txt'></input>
+                                <input type="text" placeholder='Name' name='name' required className='contact-form-txt' defaultValue={userDetails ? userDetails.displayName : ""}></input>
                                 <input type="text" placeholder='Subject' name='subject' className='contact-form-txt'></input>
-                                <input type="email" placeholder='Email' name='email' required className='contact-form-txt'></input>
+                                <input type="email" placeholder='Email' name='email' required className='contact-form-txt' defaultValue={userDetails ? userDetails.email : ""}></input>
                                 <textarea type="text" placeholder='Message' name='message' required className='contact-form-textarea' rows={8}></textarea>
                                 <input type="submit" name="submit" className='contact-form-btn'></input>
                             </form>

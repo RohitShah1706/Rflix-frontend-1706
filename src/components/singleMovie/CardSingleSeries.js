@@ -12,6 +12,8 @@ import { getAuth } from "firebase/auth";
 import { app } from '../firebaseAuth/firebaseConfig';
 import { addToMyList } from "../MyList/addToMyList";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const CardSingleSeries = (props) => {
     const imdbId = useParams().id;
     const [movie, setMovie] = useState({});
@@ -49,7 +51,15 @@ const CardSingleSeries = (props) => {
     }
 
     const postToMyList = () => {
-        alert(`${(movie.original_title || movie.original_name).toUpperCase()} added to my list !!! with imdbId ${imdbdIdToAdd.imdbId} and type ${imdbdIdToAdd.movie ? "movie" : "tv"}`);
+        toast(`${(movie.original_title || movie.original_name).toUpperCase()} added to my list.`, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
         addToMyList({ user: userDetails, imdbdIdToAdd: imdbdIdToAdd });
     }
     const assignNewRoom = () => {
@@ -210,6 +220,15 @@ const CardSingleSeries = (props) => {
     }
     return (
         <>
+            <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+            />
             <div className="item-page">
                 <img
                     src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}

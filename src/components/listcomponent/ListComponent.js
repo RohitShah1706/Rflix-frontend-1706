@@ -50,7 +50,7 @@ const ListComponent = () => {
             })
     }, []);
     return (
-        <Container fluid>
+        <Container fluid className="list-wrapper">
             <div className="list">
                 <span className="list-title">Top Movies</span>
                 <div className="wrapper">

@@ -82,9 +82,9 @@ function Navigation() {
         });
     }, [userLoggedIn])
     return (
-        <Navbar bg="dark" variant="dark" expand="lg" className="'navbar sticky-top" fixed="top">
+        <Navbar variant="dark" expand="lg" className="'navbar sticky-top" fixed="top">
             <Container fluid>
-                <Navbar.Brand href="/"><img src={logo} style={{ width: 100 }} alt=""></img></Navbar.Brand>
+                <Navbar.Brand href="/"><img src={logo} style={{ width: 85 }} alt=""></img></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
