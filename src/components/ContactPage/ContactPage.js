@@ -18,7 +18,7 @@ const ContactPage = () => {
         emailjs.sendForm(`${process.env.REACT_APP_EMAILJS_SERVICEID}`, `${process.env.REACT_APP_EMAILJS_TEMPLATEID}`, formRef.current, `${process.env.REACT_APP_EMAILJS_PUBLIC_KEY}`)
             .then((result) => {
                 // alert("Email sent successfully");
-                toast('Email Sent Successfully !', {
+                toast('Email Sent Successfully !\nCheck your mailbox.', {
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,

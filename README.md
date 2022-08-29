@@ -1,7 +1,8 @@
 
 # RFLIX FRONTEND-1706
-This app is REST based API that allows you to fetch data from tmdb and other api's - 
-this is the frontend for RFLIX-FRONTEND-1706
+This app is a netflix clone that allows user to open up instant meetings with other users in a single click, save favorite movies & series, which also has Firebase Google auth.
+
+This is the frontend for RFLIX-BACKEND-1706
 
 The backend is hosted on - https://rflix-backend-1706.herokuapp.com/  
 The frontend is hosted on - https://rflix-frontend-1706.netlify.app/  

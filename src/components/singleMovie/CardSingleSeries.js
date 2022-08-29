@@ -51,7 +51,7 @@ const CardSingleSeries = (props) => {
     }
 
     const postToMyList = () => {
-        toast(`${(movie.original_title || movie.original_name).toUpperCase()} added to my list.`, {
+        toast(`${(movie.original_title || movie.original_name).toUpperCase()} added to my list.\nCheck my list.`, {
             position: "top-center",
             autoClose: 5000,
             hideProgressBar: false,

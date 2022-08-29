@@ -44,7 +44,7 @@ const FeaturedSingleMovie = (props) => {
     }
 
     const postToMyList = () => {
-        toast(`${(movie.original_title || movie.original_name).toUpperCase()} added to your list.`, {
+        toast(`${(movie.original_title || movie.original_name).toUpperCase()} added to your list.\nCheck my list.`, {
             position: "top-center",
             autoClose: 5000,
             hideProgressBar: false,
