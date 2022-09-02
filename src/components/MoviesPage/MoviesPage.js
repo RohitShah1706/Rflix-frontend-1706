@@ -4,21 +4,15 @@ import { useParams } from "react-router-dom";
 // IMPORT BACKGROUND IMAGE
 import "./MoviesPage.scss";
 import DisplayCards from './DisplayCards'
-const axios = require('axios');
+import { useFetchGenreMoviesQuery } from '../services/backendFetchApi';
 const MoviesPage = () => {
     const genre = useParams().genre;
+    const { data, isFetching } = useFetchGenreMoviesQuery(genre);
     const [genreMovies, setgenreMovies] = useState([]);
 
     useEffect(() => {
-        const url = `${process.env.REACT_APP_GENRE_MOVIES_BASE_URL}${genre}/50`;
-        axios.get(url)
-            .then(response => {
-                setgenreMovies(response.data);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }, []);
+        setgenreMovies(data && data);
+    }, [data, genre]);
     return (
         <div className="movies-container">
             {/* create responsive row of cards */}

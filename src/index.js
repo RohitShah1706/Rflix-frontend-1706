@@ -14,22 +14,26 @@ import MyList from './components/MyList/MyList';
 import ContactPage from './components/ContactPage/ContactPage';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Provider } from 'react-redux';
+import { store } from './components/app/store';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const allowPiracy = process.env.REACT_APP_ALLOW_PIRACY;
 root.render(
   <BrowserRouter>
-    <Navigation />
-    <Routes>
-      <Route exact path="/" element={<App />} />
-      <Route path="/featured/:id" element={<FeaturedSingleMovie allowPiracy={allowPiracy} />} />
-      <Route exact path="/cardsingle/series/:id" element={<CardSingleSeries allowPiracy={allowPiracy} />} />
-      <Route path="/cardsingle/:id" element={<CardSingleMovie allowPiracy={allowPiracy} />} />
-      <Route path="/search" element={<SearchPage />} />
-      <Route path="/movies/:genre" element={< MoviesPage />} />
-      <Route path="/series/:genre" element={<SeriesPage />} />
-      <Route path="/mylist" element={<MyList />} />
-      <Route path='/contact' element={<ContactPage />} />
-    </Routes>
+    <Provider store={store}>
+      <Navigation />
+      <Routes>
+        <Route exact path="/" element={<App />} />
+        <Route path="/featured/:id" element={<FeaturedSingleMovie allowPiracy={allowPiracy} />} />
+        <Route exact path="/cardsingle/series/:id" element={<CardSingleSeries allowPiracy={allowPiracy} />} />
+        <Route path="/cardsingle/:id" element={<CardSingleMovie allowPiracy={allowPiracy} />} />
+        <Route path="/search" element={<SearchPage />} />
+        <Route path="/movies/:genre" element={< MoviesPage />} />
+        <Route path="/series/:genre" element={<SeriesPage />} />
+        <Route path="/mylist" element={<MyList />} />
+        <Route path='/contact' element={<ContactPage />} />
+      </Routes>
+    </Provider>
   </BrowserRouter>
 );
 reportWebVitals();

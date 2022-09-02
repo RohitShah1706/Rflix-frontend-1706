@@ -125,7 +125,8 @@ const CardSingleSeries = (props) => {
             axios(url)
                 .then(response => {
                     const embedUrl = `${process.env.REACT_APP_GET_SERIES_EMBED_URL}${response.data.imdb_id}`;
-                    setSeriesEmbedUrl(embedUrl);
+                    console.log(embedUrl, toWatchSeries)
+                    // setSeriesEmbedUrl(embedUrl);
                     // document.getElementById('div_iframe').scrollTop = 438
                 })
         }
@@ -268,7 +269,7 @@ const CardSingleSeries = (props) => {
                                 {/* EMBEDDED YOUTUBE AND SERIES PLAYER */}
                                 <div className="video-container">
                                     {youtubeActive ? <iframe width="560" height="315" src={youtubeUrl} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="youtube-player"></iframe> : ""}
-                                    {movieEmbedActive ? <iframe width="560" height="315" src={seriesEmbedUrl} title="" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="youtube-player" id="div_iframe" scrolling="no"></iframe> : ""}
+                                    {movieEmbedActive ? <iframe width="560" height="315" src={"https://novastream.to/embed/series?imdb=tt11198334&sea=1&epi=1"} title="" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="youtube-player" id="div_iframe" scrolling="no"></iframe> : ""}
                                 </div>
                             </div>
                         </div>
