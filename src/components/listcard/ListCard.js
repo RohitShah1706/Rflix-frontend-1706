@@ -4,6 +4,7 @@ import 'react-multi-carousel/lib/styles.css';
 import { Card, CardImg, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import "./ListCard.scss";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const ListCard = (props) => {
     const RenderCard = (movies) => {
@@ -12,7 +13,8 @@ const ListCard = (props) => {
                 return (
                     <Link to={props.movie ? `/cardsingle/${item.id}` : `/cardsingle/series/${item.id}`} key={item.id}>
                         <Card style={{ width: '10rem' }} className='list-card'>
-                            <CardImg variant="top" src={item.image || `https://image.tmdb.org/t/p/original${item.poster_path}`} alt={`Card image for ${item.title || item.name}`} />
+                            {/* using lazy load image to optimize loading time */}
+                            <LazyLoadImage src={item.image || `https://image.tmdb.org/t/p/original${item.poster_path}`} alt={`Card image for ${item.title || item.name}`} />
                         </Card>
 
                     </Link>
