@@ -13,6 +13,7 @@ import { app } from '../firebaseAuth/firebaseConfig';
 import { addToMyList } from "../MyList/addToMyList";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from "react-redux";
 const axios = require('axios');
 
 const FeaturedSingleMovie = (props) => {
@@ -20,8 +21,8 @@ const FeaturedSingleMovie = (props) => {
     const [movie, setMovie] = useState({});
     const [youtubeUrl, setYoutubeUrl] = useState("");
     const [youtubeActive, setYoutubeActive] = useState(false);
-    const [userLoggedIn, setUserLoggedIn] = useState(false);
-    const [userDetails, setUserDetails] = useState({});
+    const userLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+    const userDetails = JSON.parse(useSelector((state) => state.auth.user));
     const [imdbdIdToAdd, setimdbdIdToAdd] = useState({
         imdbId: "",
         poster_path: "",
@@ -142,18 +143,6 @@ const FeaturedSingleMovie = (props) => {
                 console.log(err);
             });
     }, []);
-    useEffect(() => {
-        // google logged in check
-        const auth = getAuth(app);
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                setUserLoggedIn(true);
-                setUserDetails(user);
-            } else {
-                setUserLoggedIn(false);
-            }
-        });
-    }, [userLoggedIn])
 
     const unhideYoutube = () => {
         setMovieEmbedActive(false);

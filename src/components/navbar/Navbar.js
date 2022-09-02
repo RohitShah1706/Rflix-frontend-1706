@@ -11,6 +11,8 @@ import { fireBaseLogout } from '../firebaseAuth/fireBaseLogout';
 import { fireBaseSignIn } from '../firebaseAuth/fireBaseSignIn';
 import { getAuth } from "firebase/auth";
 import { app } from '../firebaseAuth/firebaseConfig';
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from '../app/authSlice';
 const axios = require('axios');
 const sendSignInDetails = (user) => {
     axios.post(`${process.env.REACT_APP_USER_SIGN_IN_BASE_URL}signin/`, {
@@ -24,8 +26,11 @@ const sendSignInDetails = (user) => {
         })
 }
 function Navigation() {
-    const [userLoggedIn, setUserLoggedIn] = useState(false);
-    const [userDetails, setUserDetails] = useState({});
+    // const [userLoggedIn, setUserLoggedIn] = useState(false);
+    const userLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+    const userDetails = JSON.parse(useSelector((state) => state.auth.user));
+    const dispatch = useDispatch();
+    // const [userDetails, setUserDetails] = useState({});
     const [showDropdown, setShowDropdown] = useState("");
     const [dropDownItems, setDropDownItems] = useState([]);
 
@@ -43,7 +48,8 @@ function Navigation() {
         fireBaseSignIn()
             .then(user => {
                 if (user) {
-                    // sendSignInDetails(user);
+                    sendSignInDetails(user);
+                    dispatch(authActions.login(JSON.stringify(user)));
                 }
             })
             .catch(err => {
@@ -53,6 +59,7 @@ function Navigation() {
     const signOutWithFirebase = () => {
         // sign out with firebase
         fireBaseLogout();
+        dispatch(authActions.logout());
     }
     useEffect(() => {
         let urlIntab = window.location.href;
@@ -62,22 +69,17 @@ function Navigation() {
         }
         else if (urlIntab.includes("/series") && !urlIntab.includes("/cardsingle")) {
             setShowDropdown("/series");
-            setDropDownItems(dropdownitemSeries);
+            setDropDownItems(dropdownitemSeries);   
         }
 
         // google logged in check
         const auth = getAuth(app);
         auth.onAuthStateChanged(user => {
             if (user) {
-                setUserLoggedIn(true);
-                setUserDetails(user);
+                dispatch(authActions.login(JSON.stringify(user)));
                 sendSignInDetails(user);
             } else {
-                setUserLoggedIn(false);
-                if (urlIntab.includes("/mylist")) {
-                    // redirect to home page
-                    window.location.href = "/";
-                }
+                dispatch(authActions.logout());
             }
         });
     }, [userLoggedIn])

@@ -22,17 +22,7 @@ root.render(
   <BrowserRouter>
     <Provider store={store}>
       <Navigation />
-      <Routes>
-        <Route exact path="/" element={<App />} />
-        <Route path="/featured/:id" element={<FeaturedSingleMovie allowPiracy={allowPiracy} />} />
-        <Route exact path="/cardsingle/series/:id" element={<CardSingleSeries allowPiracy={allowPiracy} />} />
-        <Route path="/cardsingle/:id" element={<CardSingleMovie allowPiracy={allowPiracy} />} />
-        <Route path="/search" element={<SearchPage />} />
-        <Route path="/movies/:genre" element={< MoviesPage />} />
-        <Route path="/series/:genre" element={<SeriesPage />} />
-        <Route path="/mylist" element={<MyList />} />
-        <Route path='/contact' element={<ContactPage />} />
-      </Routes>
+      <App />
     </Provider>
   </BrowserRouter>
 );

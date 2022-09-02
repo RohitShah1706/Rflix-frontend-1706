@@ -8,10 +8,11 @@ import { getAuth } from "firebase/auth";
 import { app } from '../firebaseAuth/firebaseConfig';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from 'react-redux';
 const ContactPage = () => {
     const [showMap, setShowMap] = useState(false);
-    const [userLoggedIn, setUserLoggedIn] = useState(false);
-    const [userDetails, setUserDetails] = useState({});
+    const userLoggedIn = useSelector(state => state.auth.userLoggedIn);
+    const userDetails = JSON.parse(useSelector(state => state.auth.user));
     const formRef = useRef();
     const sendEmail = (event) => {
         event.preventDefault();
@@ -32,18 +33,7 @@ const ContactPage = () => {
             });
         event.target.reset();
     }
-    useEffect(() => {
-        // google logged in check
-        const auth = getAuth(app);
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                setUserLoggedIn(true);
-                setUserDetails(user);
-            } else {
-                setUserLoggedIn(false);
-            }
-        });
-    }, [userLoggedIn])
+
     return (
         <div className='contact-page'>
             <ToastContainer
@@ -55,7 +45,7 @@ const ContactPage = () => {
                 rtl={false}
                 pauseOnFocusLoss
             />
-            <iframe src='https://my.spline.design/untitled-f5a8e381442a6b067ceb056d47770ced/' frameborder='0' width='100%' height='100%' className='contact-page__bg'></iframe>
+            <iframe src='https://my.spline.design/untitled-f5a8e381442a6b067ceb056d47770ced/' frameBorder={'0'} width='100%' height='100%' className='contact-page__bg'></iframe>
             <div className="contact">
                 <div className="contact__outer">
                     <div className="contact__inner">

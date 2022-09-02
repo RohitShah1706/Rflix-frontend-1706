@@ -14,13 +14,14 @@ import { addToMyList } from "../MyList/addToMyList";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from "react-redux";
 const CardSingleSeries = (props) => {
     const imdbId = useParams().id;
     const [movie, setMovie] = useState({});
     const [youtubeUrl, setYoutubeUrl] = useState("");
     const [youtubeActive, setYoutubeActive] = useState(false);
-    const [userLoggedIn, setUserLoggedIn] = useState(false);
-    const [userDetails, setUserDetails] = useState({});
+    const userLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+    const userDetails = JSON.parse(useSelector((state) => state.auth.user));
     const [imdbdIdToAdd, setimdbIdToAdd] = useState({
         imdbId: "",
         poster_path: "",
@@ -125,7 +126,7 @@ const CardSingleSeries = (props) => {
             axios(url)
                 .then(response => {
                     const embedUrl = `${process.env.REACT_APP_GET_SERIES_EMBED_URL}${response.data.imdb_id}`;
-                    console.log(embedUrl, toWatchSeries)
+                    // console.log(embedUrl, toWatchSeries)
                     // setSeriesEmbedUrl(embedUrl);
                     // document.getElementById('div_iframe').scrollTop = 438
                 })
@@ -148,19 +149,6 @@ const CardSingleSeries = (props) => {
             return <option key={index} value={`${episode.episode_number}`}>{episode.name}</option>
         })
     }
-
-    useEffect(() => {
-        // google logged in check
-        const auth = getAuth(app);
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                setUserLoggedIn(true);
-                setUserDetails(user);
-            } else {
-                setUserLoggedIn(false);
-            }
-        });
-    }, [userLoggedIn])
 
     useEffect(() => {
         var url = `${process.env.REACT_APP_SEARCH_TMDB_SERIES_CARD_SINGLE_BASE_URL}${imdbId}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&external_source=imdb_id`

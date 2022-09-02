@@ -13,14 +13,15 @@ import { app } from '../firebaseAuth/firebaseConfig';
 import { addToMyList } from "../MyList/addToMyList";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
+import { useSelector } from "react-redux";
 import 'react-toastify/dist/ReactToastify.css';
 const CardSingleMovie = (props) => {
     const imdbId = useParams().id;
     const [movie, setMovie] = useState({});
     const [youtubeUrl, setYoutubeUrl] = useState("");
     const [youtubeActive, setYoutubeActive] = useState(false);
-    const [userLoggedIn, setUserLoggedIn] = useState(false);
-    const [userDetails, setUserDetails] = useState({});
+    const userLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+    const userDetails = JSON.parse(useSelector((state) => state.auth.user));    
     const [imdbdIdToAdd, setimdbdIdToAdd] = useState({
         imdbId: "",
         poster_path: "",
@@ -167,19 +168,6 @@ const CardSingleMovie = (props) => {
                 console.log(err);
             });
     }, []);
-
-    useEffect(() => {
-        // google logged in check
-        const auth = getAuth(app);
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                setUserLoggedIn(true);
-                setUserDetails(user);
-            } else {
-                setUserLoggedIn(false);
-            }
-        });
-    }, [userLoggedIn])
 
     const unhideYoutube = () => {
         setMovieEmbedActive(false);
