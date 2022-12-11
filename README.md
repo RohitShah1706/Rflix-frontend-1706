@@ -4,7 +4,7 @@ This app is a netflix clone that allows user to open up instant meetings with ot
 
 This is the frontend for RFLIX-BACKEND-1706
 
-The backend is hosted on - https://rflix-backend-1706.onrender.com/
+The backend is hosted on - https://rflix-backend-1706.onrender.com/  
 The frontend is hosted on - https://rflix-frontend-1706.netlify.app/  
 backend repo link - https://github.com/RohitShah1706/Rflix-backend-1706
 
