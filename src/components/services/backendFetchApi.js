@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-const baseUrl = "https://rflix-backend-1706.herokuapp.com/api";
+const baseUrl = "https://rflix-backend-1706.onrender.com/api";
 
 export const backendFetchApi = createApi({
     reducerPath: 'backendFetchApi',
